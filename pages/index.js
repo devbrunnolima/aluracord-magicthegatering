@@ -1,5 +1,7 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import appConfig from '../config.json';
+import React from 'react';
+import { useRouter } from 'next/router';
 
 function GlobalStyle() {
   return (
@@ -60,7 +62,9 @@ function Titulo(props) {
 // export default HomePage
 
 export default function PaginaInicial() {
-  const username = 'devbrunnolima';
+  //const username = 'devbrunnolima';
+ const [username, setUsername] = React.useState('');
+ const roteamento =  useRouter(); 
 
   return (
     <>
@@ -91,6 +95,12 @@ export default function PaginaInicial() {
           {/* Formulário */}
           <Box
             as="form"
+            onSubmit={ function(infosDoEvento) {
+              infosDoEvento.preventDefault();
+              console.log('Houve um submit do form');
+             // window.location.href ='/chat';
+             roteamento.push('/chat');
+            }}
             styleSheet={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
@@ -101,8 +111,30 @@ export default function PaginaInicial() {
               {appConfig.name}
             </Text>
 
-            <TextField
-              fullWidth
+            {/* < input 
+           type="text" 
+           value={username}
+           onChange={function handler(event) {
+             console.log('Usuário digitou', event.target.value);
+             //Onde está o valor
+             const valor = event.target.value;
+             //como alterar o valor
+             setUsername(valor);
+           }}
+           
+          />*/}
+
+           <TextField
+              
+              value={username}
+             onChange={function handler(event) {
+             console.log('Usuário digitou', event.target.value);
+             //Onde está o valor
+             const valor = event.target.value;
+             //como alterar o valor
+             setUsername(valor);
+            }}
+            fullWidth
               textFieldColors={{
                 neutral: {
                   textColor: appConfig.theme.colors.neutrals[200],
